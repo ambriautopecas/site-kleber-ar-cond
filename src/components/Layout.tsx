@@ -5,9 +5,7 @@ import {
   Phone, 
   MessageSquare, 
   MapPin, 
-  Globe, 
   Instagram, 
-  Youtube,
   X
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -80,28 +78,75 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
 
-        {/* Mobile Nav */}
+        {/* Mobile Nav Overlay */}
         <AnimatePresence>
           {isMenuOpen && (
-            <motion.nav 
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden mt-4 flex flex-col gap-4 pb-4"
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[60] bg-slate-900 lg:hidden flex flex-col"
             >
-              {navItems.map((item) => (
-                <Link 
-                  key={item.name} 
-                  to={item.path} 
-                  className={`text-lg font-medium transition-colors py-2 border-b border-white/5 ${
-                    location.pathname === item.path ? 'text-primary' : 'text-white/80 hover:text-primary'
-                  }`}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
+              <div className="p-6 flex items-center justify-between border-b border-white/5">
+                <Link to="/" className="flex items-center gap-3" onClick={() => setIsMenuOpen(false)}>
+                  <Settings className="text-primary w-8 h-8" />
+                  <div className="flex flex-col text-left">
+                    <h2 className="text-white text-lg font-bold leading-tight uppercase font-display">Kleber</h2>
+                    <span className="text-primary text-[8px] font-medium tracking-widest uppercase">Peças e Ferramentas</span>
+                  </div>
                 </Link>
-              ))}
-            </motion.nav>
+                <button 
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-white p-2 hover:bg-white/10 rounded-lg transition-colors"
+                >
+                  <X className="w-8 h-8" />
+                </button>
+              </div>
+
+              <nav className="flex-1 flex flex-col justify-center p-8 gap-8">
+                {navItems.map((item, i) => (
+                  <motion.div
+                    key={item.name}
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: i * 0.1 }}
+                  >
+                    <Link 
+                      to={item.path} 
+                      className={`text-3xl font-bold transition-colors font-display ${
+                        location.pathname === item.path ? 'text-primary' : 'text-white hover:text-primary'
+                      }`}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  </motion.div>
+                ))}
+              </nav>
+
+              <div className="p-8 border-t border-white/5 bg-white/5">
+                <div className="flex flex-col gap-6">
+                  <div className="flex items-center gap-4 text-slate-400">
+                    <Phone className="w-5 h-5 text-primary" />
+                    <a href="tel:+551641411420" className="text-sm">(16) 4141-1420</a>
+                  </div>
+                  <div className="flex items-center gap-4 text-slate-400">
+                    <MessageSquare className="w-5 h-5 text-[#25D366]" />
+                    <a href="https://wa.me/5516974014990" className="text-sm">(16) 97401-4990</a>
+                  </div>
+                  <div className="flex gap-4 mt-2">
+                    <a 
+                      href="https://www.instagram.com/kleberpecaseferramentasauto/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-white"
+                    >
+                      <Instagram className="w-6 h-6" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           )}
         </AnimatePresence>
       </header>
@@ -171,15 +216,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div>
               <h5 className="text-primary font-bold uppercase text-xs tracking-[0.2em] mb-8">Redes Sociais</h5>
               <div className="flex gap-4">
-                {[Globe, Instagram, Youtube].map((Icon, i) => (
-                  <a 
-                    key={i}
-                    href="#" 
-                    className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center hover:bg-primary hover:text-slate-900 transition-all duration-300"
-                  >
-                    <Icon className="w-6 h-6" />
-                  </a>
-                ))}
+                <a 
+                  href="https://www.instagram.com/kleberpecaseferramentasauto/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center hover:bg-primary hover:text-slate-900 transition-all duration-300"
+                >
+                  <Instagram className="w-6 h-6" />
+                </a>
               </div>
             </div>
           </div>
@@ -187,7 +231,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 text-slate-500 text-[10px] uppercase tracking-[0.2em] font-medium">
             <p>© 2024 Kleber Peças e Ferramentas. Todos os direitos reservados.</p>
             <div className="flex gap-8">
-              <a href="#" className="hover:text-white transition-colors">Política de Privacidade</a>
+              <Link to="/politica-de-privacidade" className="hover:text-white transition-colors">Política de Privacidade</Link>
               <a href="#" className="hover:text-white transition-colors">Termos de Uso</a>
             </div>
           </div>

@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { 
   History, 
   Target, 
@@ -6,11 +7,35 @@ import {
   MapPin, 
   Phone, 
   MessageSquare,
-  Clock
+  Clock,
+  Send
 } from 'lucide-react';
 import { motion } from 'motion/react';
 
 export default function About() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.message) {
+      alert('Por favor, preencha todos os campos.');
+      return;
+    }
+    
+    setStatus('sending');
+    // Simulate API call
+    setTimeout(() => {
+      setStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+      setTimeout(() => setStatus('idle'), 3000);
+    }, 1500);
+  };
+
   return (
     <div className="bg-white min-h-screen">
       {/* Hero Section */}
@@ -96,6 +121,90 @@ export default function About() {
         </div>
       </section>
 
+      {/* Inquiry Form Section */}
+      <section className="py-24 bg-slate-50 px-4 md:px-8 lg:px-20">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-primary font-bold uppercase tracking-[0.2em] mb-4">Dúvidas?</h2>
+            <h3 className="text-3xl md:text-4xl font-bold text-slate-900 font-display">Envie sua Mensagem</h3>
+          </div>
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100"
+          >
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label htmlFor="name" className="text-sm font-bold text-slate-700 uppercase tracking-wider">Nome</label>
+                  <input 
+                    type="text" 
+                    id="name"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    className="w-full px-6 py-4 rounded-xl bg-slate-50 border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                    placeholder="Seu nome completo"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="email" className="text-sm font-bold text-slate-700 uppercase tracking-wider">E-mail</label>
+                  <input 
+                    type="email" 
+                    id="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    className="w-full px-6 py-4 rounded-xl bg-slate-50 border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                    placeholder="seu@email.com"
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="message" className="text-sm font-bold text-slate-700 uppercase tracking-wider">Mensagem</label>
+                <textarea 
+                  id="message"
+                  required
+                  rows={5}
+                  value={formData.message}
+                  onChange={(e) => setFormData({...formData, message: e.target.value})}
+                  className="w-full px-6 py-4 rounded-xl bg-slate-50 border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none"
+                  placeholder="Como podemos ajudar?"
+                />
+              </div>
+              
+              <button 
+                type="submit"
+                disabled={status === 'sending'}
+                className={`w-full py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 transition-all ${
+                  status === 'success' 
+                    ? 'bg-green-500 text-white' 
+                    : status === 'error'
+                    ? 'bg-red-500 text-white'
+                    : 'bg-primary text-slate-900 hover:bg-primary-dark shadow-xl shadow-primary/20'
+                }`}
+              >
+                {status === 'sending' ? (
+                  <div className="w-6 h-6 border-2 border-slate-900/30 border-t-slate-900 rounded-full animate-spin" />
+                ) : status === 'success' ? (
+                  <>
+                    <CheckCircle2 className="w-6 h-6" />
+                    Enviado com Sucesso!
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5" />
+                    Enviar Mensagem
+                  </>
+                )}
+              </button>
+            </form>
+          </motion.div>
+        </div>
+      </section>
+
       {/* For Workshops Section */}
       <section className="bg-slate-900 py-24 px-4 md:px-8 lg:px-20">
         <div className="max-w-7xl mx-auto">
@@ -133,6 +242,53 @@ export default function About() {
                 <h4 className="text-white text-2xl font-bold mb-4 font-display">{item.title}</h4>
                 <p className="text-slate-400 leading-relaxed">{item.desc}</p>
               </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-24 bg-white px-4 md:px-8 lg:px-20">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-primary font-bold uppercase tracking-[0.2em] mb-4">FAQ</h2>
+            <h3 className="text-3xl md:text-4xl font-bold text-slate-900 font-display">Perguntas Frequentes</h3>
+          </div>
+          
+          <div className="space-y-4">
+            {[
+              {
+                q: "Quais são os sinais de que o compressor do ar-condicionado está falhando?",
+                a: "Os sinais mais comuns incluem ruídos estranhos ao ligar o ar, o sistema não esfriar adequadamente, cheiro de queimado vindo das saídas de ar ou vazamentos visíveis de óleo ao redor do compressor."
+              },
+              {
+                q: "Com que frequência devo trocar o filtro secador?",
+                a: "Recomendamos a troca do filtro secador sempre que o sistema for aberto para manutenção ou a cada 2 anos, pois ele acumula umidade e impurezas que podem danificar o compressor."
+              },
+              {
+                q: "Vocês entregam peças e ferramentas para outras cidades?",
+                a: "Sim! Atendemos Ribeirão Preto e região com entrega própria e enviamos para todo o Brasil através de transportadoras parceiras ou Correios."
+              },
+              {
+                q: "As peças vendidas pela Kleber têm garantia?",
+                a: "Sim, todas as nossas peças possuem garantia contra defeitos de fabricação, seguindo os prazos estabelecidos pelos fabricantes (geralmente de 3 a 6 meses)."
+              },
+              {
+                q: "Como saber se a peça é compatível com o meu veículo?",
+                a: "Nossa equipe técnica utiliza softwares avançados de catálogo. Basta nos informar o modelo, ano e, preferencialmente, o número do chassi para garantirmos a compatibilidade exata."
+              }
+            ].map((item, i) => (
+              <details key={i} className="group bg-slate-50 rounded-2xl border border-slate-100 overflow-hidden">
+                <summary className="flex items-center justify-between p-6 cursor-pointer list-none font-bold text-slate-900 hover:bg-slate-100 transition-colors">
+                  {item.q}
+                  <span className="text-primary transition-transform group-open:rotate-180">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="19 9l-7 7-7-7"></path></svg>
+                  </span>
+                </summary>
+                <div className="p-6 pt-0 text-slate-600 leading-relaxed border-t border-slate-200/50">
+                  {item.a}
+                </div>
+              </details>
             ))}
           </div>
         </div>

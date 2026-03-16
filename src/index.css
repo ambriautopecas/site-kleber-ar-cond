@@ -9,8 +9,12 @@
   --color-primary-dark: #d4a004;
 }
 
-@layer base {
-  body {
-    @apply font-sans text-slate-900 bg-[#f8f8f5];
+@layer utilities {
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
   }
 }

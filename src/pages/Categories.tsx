@@ -11,8 +11,8 @@ import { motion } from 'motion/react';
 const categories = [
   {
     icon: Wind,
-    title: "Ar Condicionado Automotivo",
-    description: "Compressores, condensadores, evaporadores, filtros secadores, válvulas de expansão e mangueiras.",
+    title: "Climatização",
+    description: "Compressores Sanden originais, condensadores, evaporadores e mangueiras para máxima performance.",
     items: ["Compressores", "Condensadores", "Evaporadores", "Filtros", "Válvulas"],
     image: "https://lh3.googleusercontent.com/aida-public/AB6AXuADe3rcm0hgqHUDtpaA7UkTW7iNS0HPZi-k60nizxTD8-OYteHYWr1Sj_DETogv93pl-GYfBcuHfwZ9ZqPyvs3taaW10noqM22dRb7sbpa5urSIuawtxsjUNfpywuX-crP69KZny-Cg_zLgz6x0Z6GKMzAqtGOlEdx2XO_FOmQPee4xq3uEFCXzmzPbf-iUN0IjJeFK_knPdMnQi3htvoeDCedtnMfMrEdnSwBzjQ6KJZX_TYXSGlgYJj5kdRg09qL2WO8DqWdo87rs"
   },

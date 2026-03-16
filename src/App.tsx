@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Categories from './pages/Categories';
 import Gallery from './pages/Gallery';
 import About from './pages/About';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
           <Route path="/categorias" element={<Categories />} />
           <Route path="/galeria" element={<Gallery />} />
           <Route path="/sobre" element={<About />} />
+          <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
         </Routes>
       </Layout>
     </BrowserRouter>
