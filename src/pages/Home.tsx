@@ -86,39 +86,23 @@ export default function Home() {
       </section>
 
       {/* Marcas Parceiras */}
-      <section className="py-12 bg-white border-b border-slate-100 overflow-hidden">
-        <div className="container mx-auto px-4 md:px-8 lg:px-20 max-w-7xl mb-8">
-          <p className="text-center text-slate-400 text-[10px] font-bold uppercase tracking-[0.3em]">Trabalhamos com as melhores marcas</p>
+      <section className="py-8 bg-primary border-y border-primary-dark/20 overflow-hidden">
+        <div className="container mx-auto px-4 md:px-8 lg:px-20 max-w-7xl mb-4">
+          <p className="text-center text-slate-900/80 text-sm font-bold uppercase tracking-[0.3em]">Trabalhamos com as melhores marcas</p>
         </div>
         
         <div className="relative flex overflow-x-hidden">
-          <div className="animate-marquee whitespace-nowrap flex items-center gap-16 md:gap-24 py-4">
-            {[
-              { name: 'SANDEN', logo: 'https://logo.clearbit.com/sanden.com' },
-              { name: 'DENSO', logo: 'https://logo.clearbit.com/denso.com' },
-              { name: 'DELPHI', logo: 'https://logo.clearbit.com/delphi.com' },
-              { name: 'MAHLE', logo: 'https://logo.clearbit.com/mahle.com' },
-              { name: 'MAGNETI MARELLI', logo: 'https://logo.clearbit.com/marelli.com' },
-              { name: 'VALEO', logo: 'https://logo.clearbit.com/valeo.com' }
-            ].map((brand, i) => (
-              <div key={i} className="flex items-center gap-4 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
-                <img src={brand.logo} alt={brand.name} className="h-8 md:h-12 w-auto object-contain" referrerPolicy="no-referrer" />
-                <span className="text-xl md:text-2xl font-black text-slate-900 tracking-tighter font-display">{brand.name}</span>
-              </div>
+          <div className="animate-marquee whitespace-nowrap flex items-center gap-24 md:gap-32 py-2">
+            {['SANDEN', 'DENSO', 'DELPHI', 'MAHLE', 'MAGNETI MARELLI', 'VALEO'].map((brand, i) => (
+              <span key={i} className="text-2xl md:text-3xl font-black text-slate-900 tracking-tighter font-display">
+                {brand}
+              </span>
             ))}
             {/* Duplicate for seamless loop */}
-            {[
-              { name: 'SANDEN', logo: 'https://logo.clearbit.com/sanden.com' },
-              { name: 'DENSO', logo: 'https://logo.clearbit.com/denso.com' },
-              { name: 'DELPHI', logo: 'https://logo.clearbit.com/delphi.com' },
-              { name: 'MAHLE', logo: 'https://logo.clearbit.com/mahle.com' },
-              { name: 'MAGNETI MARELLI', logo: 'https://logo.clearbit.com/marelli.com' },
-              { name: 'VALEO', logo: 'https://logo.clearbit.com/valeo.com' }
-            ].map((brand, i) => (
-              <div key={`dup-${i}`} className="flex items-center gap-4 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
-                <img src={brand.logo} alt={brand.name} className="h-8 md:h-12 w-auto object-contain" referrerPolicy="no-referrer" />
-                <span className="text-xl md:text-2xl font-black text-slate-900 tracking-tighter font-display">{brand.name}</span>
-              </div>
+            {['SANDEN', 'DENSO', 'DELPHI', 'MAHLE', 'MAGNETI MARELLI', 'VALEO'].map((brand, i) => (
+              <span key={`dup-${i}`} className="text-2xl md:text-3xl font-black text-slate-900 tracking-tighter font-display">
+                {brand}
+              </span>
             ))}
           </div>
         </div>
