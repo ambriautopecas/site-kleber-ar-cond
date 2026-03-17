@@ -19,8 +19,8 @@ import { Link } from 'react-router-dom';
 
 const IMAGES = {
   hero: "https://lh3.googleusercontent.com/aida-public/AB6AXuAx1gAYQxzS402H6RVQgw6OTbESgmNu7hVemNk0YxJy7b9k9Gy1g52icDRPSNUwql9FlL8SPVTJqVY3Sch_PxQvWDdr8rqU1pLXhudlvk0ooTV7VuTnqHQOVc-ctjPQ0eINQiD6Yx-KCCmZqxmYBYtsHQNh0uO8GW0U6Y_ldnHMnEC38XkP-fLdAnoZsS1oDoAvEJTsqpIcOyDbzJd-bjAmkqY-5N9bhnU54pPRTjU-tIsuUHV1lkbpifbiVKVlvwyI354nyre0ZjoD",
-  compressor: "https://m.media-amazon.com/images/I/71-x9B-o7qL._AC_SL1500_.jpg", // High quality Sanden 7V16 compressor image
-  filter: "https://lh3.googleusercontent.com/aida-public/AB6AXuCqOVVH-mdUu8UJAmP0EugvaDOAG7rS2zRDVSr2ROk5R-awUYP9hslHJcz50yFRZweyyK3d7u9mP5NWsoNW-qQzyaeNiEAXkR26BlCZbnnVFFqM9uW7MI5bh6b6dXehKtWixyl8tBbjD6xgAhKzC2uqsSkxygoLpbZTF82JGg4XCNPOmzPrBuTXzNGgI0D6cGJNtflrr4mdVsw3tgjoEx-16LygxhrKGCy1dv8Z_9gxFjPi-f2e9mjiQIvuMrf2p9Iz0cElMuHGWSf_",
+  compressor: "https://http2.mlstatic.com/D_NQ_NP_761160-MLBU761160807_052024-O.jpg", // Specific Sanden compressor from user link
+  filter: "https://http2.mlstatic.com/D_NQ_NP_623257-MLB42792134844_072020-O.jpg", // Stable Mercado Livre link for universal filter drier
   radiator: "https://lh3.googleusercontent.com/aida-public/AB6AXuCRXFhxqwIHE_KoY1OqWXpQIKfYBmSxkMOYqGbY9U-WoKcGTv7-g_ucwtHqRE1tJDYo4ujtDrOLIecZRwMJSDuT-1BTy4r7bOUIW3IJIny5PRkPS09Fbj3ja47a2o2Xuaxgr1uhigAPSIdCKSpmp3tdMIOyRnuQqZJP7eTVKtNk4LEv49AYF8E6otyklrhGEQZjmu_UAlHL9vFyyxkqmxwwfdf99Lx44uKspgUptleJsybkQVgfWIIvAgRWjkEAZKyEwtsOAsOGN0_-",
   map: "https://lh3.googleusercontent.com/aida-public/AB6AXuAt9SUDpjbviq_43Trtyd68ARK8MguVpiCFckxWxCSwW2QAkFym2ZUUyAXVi6uckgBaaGf0xvS-1sATg0RVIk5n1R90eL6MUPX943UImG4rQ7e_A8EgjjHDpZL1QUftSVvMHbudL5yxFZyJCwF967hRnlo48tZ_RZJVy0fW890ngICgwwbZpj8hIhqJFsHVdhSbovDvbTtb03R4V6fyZdgdMBXqTgkVfdsoSVO9lPFNiMGuba5Nf_ohNTISjbamNPcW58kY8z0O-zkk"
 };
@@ -129,6 +129,7 @@ export default function Home() {
             description="Original Sanden para máxima performance e eficiência energética no seu veículo."
             badge="Novo"
             badgeColor="bg-primary"
+            link="https://www.mercadolivre.com.br/compressor-ar-condicioando-fiat-ducato-23-multijet--jumper/up/MLBU761160807?pdp_filters=item_id:MLB3443064079#is_advertising=true&searchVariation=MLBU761160807&backend_model=search-backend&position=3&search_layout=stack&type=pad&tracking_id=522d47c2-9e8b-48c0-92c5-0466fe5023b6&ad_domain=VQCATCORE_LST&ad_position=3&ad_click_id=ZmY2MzNlYjctNTcwYS00MTM4LWExYTYtNzI3YzY1OWVjYzdk"
           />
           <ProductCard 
             image={IMAGES.filter}
@@ -336,26 +337,40 @@ export default function Home() {
   );
 }
 
-function ProductCard({ image, category, title, description, badge, badgeColor }: { 
+function ProductCard({ image, category, title, description, badge, badgeColor, link }: { 
   image: string, 
   category: string, 
   title: string, 
   description: string,
   badge?: string,
-  badgeColor?: string
+  badgeColor?: string,
+  link?: string
 }) {
+  const handleClick = () => {
+    if (link) {
+      window.open(link, '_blank', 'noopener,noreferrer');
+    } else {
+      window.open('https://wa.me/5516974014990', '_blank');
+    }
+  };
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:shadow-2xl hover:shadow-slate-200 transition-all duration-500 hover:-translate-y-2"
+      onClick={handleClick}
+      className="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:shadow-2xl hover:shadow-slate-200 transition-all duration-500 hover:-translate-y-2 cursor-pointer"
     >
       <div className="relative aspect-square bg-slate-50 overflow-hidden">
         <img 
           src={image} 
           alt={title} 
           referrerPolicy="no-referrer"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = `https://picsum.photos/seed/${title}/800/800`;
+          }}
           className="w-full h-full object-contain p-6 group-hover:scale-110 transition-transform duration-700"
         />
         {badge && (

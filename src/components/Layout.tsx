@@ -43,17 +43,29 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
             {/* Desktop Nav */}
             <nav className="hidden lg:flex items-center gap-8">
-              {navItems.map((item) => (
-                <Link 
-                  key={item.name} 
-                  to={item.path} 
-                  className={`text-sm font-medium transition-colors ${
-                    location.pathname === item.path ? 'text-primary' : 'text-white/80 hover:text-primary'
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {navItems.map((item) => {
+                const isActive = location.pathname === item.path;
+                return (
+                  <Link 
+                    key={item.name} 
+                    to={item.path} 
+                    className={`text-sm transition-all relative py-2 ${
+                      isActive 
+                        ? 'text-primary font-bold' 
+                        : 'text-white/80 hover:text-primary font-medium'
+                    }`}
+                  >
+                    {item.name}
+                    {isActive && (
+                      <motion.div 
+                        layoutId="nav-underline"
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </Link>
+                );
+              })}
             </nav>
           </div>
 
@@ -113,11 +125,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   >
                     <Link 
                       to={item.path} 
-                      className={`text-3xl font-bold transition-colors font-display ${
+                      className={`text-3xl font-bold transition-all font-display flex items-center gap-4 ${
                         location.pathname === item.path ? 'text-primary' : 'text-white hover:text-primary'
                       }`}
                       onClick={() => setIsMenuOpen(false)}
                     >
+                      {location.pathname === item.path && (
+                        <motion.div 
+                          layoutId="mobile-nav-indicator"
+                          className="w-1.5 h-8 bg-primary rounded-full"
+                        />
+                      )}
                       {item.name}
                     </Link>
                   </motion.div>

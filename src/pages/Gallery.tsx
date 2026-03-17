@@ -13,7 +13,7 @@ const products = [
     id: 1,
     category: "Ar Condicionado",
     title: "Compressor Sanden 7H15",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuADe3rcm0hgqHUDtpaA7UkTW7iNS0HPZi-k60nizxTD8-OYteHYWr1Sj_DETogv93pl-GYfBcuHfwZ9ZqPyvs3taaW10noqM22dRb7sbpa5urSIuawtxsjUNfpywuX-crP69KZny-Cg_zLgz6x0Z6GKMzAqtGOlEdx2XO_FOmQPee4xq3uEFCXzmzPbf-iUN0IjJeFK_knPdMnQi3htvoeDCedtnMfMrEdnSwBzjQ6KJZX_TYXSGlgYJj5kdRg09qL2WO8DqWdo87rs",
+    image: "https://http2.mlstatic.com/D_NQ_NP_761160-MLBU761160807_052024-O.jpg",
     description: "Ideal para sistemas de refrigeração pesada."
   },
   {
@@ -34,7 +34,7 @@ const products = [
     id: 4,
     category: "Ar Condicionado",
     title: "Filtro Secador Universal",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCqOVVH-mdUu8UJAmP0EugvaDOAG7rS2zRDVSr2ROk5R-awUYP9hslHJcz50yFRZweyyK3d7u9mP5NWsoNW-qQzyaeNiEAXkR26BlCZbnnVFFqM9uW7MI5bh6b6dXehKtWixyl8tBbjD6xgAhKzC2uqsSkxygoLpbZTF82JGg4XCNPOmzPrBuTXzNGgI0D6cGJNtflrr4mdVsw3tgjoEx-16LygxhrKGCy1dv8Z_9gxFjPi-f2e9mjiQIvuMrf2p9Iz0cElMuHGWSf_",
+    image: "https://http2.mlstatic.com/D_NQ_NP_623257-MLB42792134844_072020-O.jpg",
     description: "Compatível com diversos modelos de veículos."
   },
   // Adding more mock items to fill the gallery
@@ -147,6 +147,10 @@ export default function Gallery() {
                     src={product.image} 
                     alt={product.title}
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = `https://picsum.photos/seed/${product.title}/800/800`;
+                    }}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
